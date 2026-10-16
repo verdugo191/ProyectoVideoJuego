@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://cony2njw7nwg2"]
+
+[ext_resource type="Script" uid="uid://cofbuq541i83g" path="res://scripts/enemigos.gd" id="1_khrlw"]
+[ext_resource type="Texture2D" uid="uid://cwjivwqf71ox7" path="res://assets/Pixel Art Snarling Dog Animation Strip.png" id="3_i4ddj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6qxc"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(15, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhypr"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(284, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuu80"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(553, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toit2"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(822, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ak27"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(1091, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eacsh"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(1360, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlf0w"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(1629, 200, 269, 524)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkxot"]
+atlas = ExtResource("3_i4ddj")
+region = Rect2(1898, 200, 269, 524)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0eb53"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6qxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhypr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cuu80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toit2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ak27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eacsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlf0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkxot")
+}],
+"loop": 1,
+"name": &"Dog",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_slf6f"]
+size = Vector2(159, 87)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ithms"]
+radius = 192.37463
+
+[node name="Enemigos" type="CharacterBody2D" unique_id=1118322169]
+script = ExtResource("1_khrlw")
+
+[node name="Enemi2" type="Sprite2D" parent="." unique_id=1266679235]
+position = Vector2(49.00003, 36.000015)
+scale = Vector2(0.1, 0.1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=135392446]
+position = Vector2(47.000004, 79)
+scale = Vector2(0.59999996, 0.38999996)
+sprite_frames = SubResource("SpriteFrames_0eb53")
+animation = &"Dog"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1784284206]
+position = Vector2(49.499996, 37.5)
+shape = SubResource("RectangleShape2D_slf6f")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=194990565]
+position = Vector2(45, 47)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=242914953]
+position = Vector2(2, -6)
+shape = SubResource("CircleShape2D_ithms")

@@ -1,0 +1,235 @@
+[gd_scene format=3 uid="uid://bb741n3vvy6co"]
+
+[ext_resource type="PackedScene" uid="uid://dac26rcnmntk7" path="res://level/coins/coin.tscn" id="1_8es24"]
+[ext_resource type="Texture2D" uid="uid://cacrejgpw1smy" path="res://assets/Mapa laberíntico de senderos entre setos.png" id="1_ih8w3"]
+[ext_resource type="PackedScene" uid="uid://bma76fr71pypk" path="res://level/hazards/bush.tscn" id="2_gbk3v"]
+[ext_resource type="PackedScene" uid="uid://c5dmxe5purm4b" path="res://scenes/enemigos.tscn" id="3_gbk3v"]
+[ext_resource type="PackedScene" uid="uid://e1pystbcib3c" path="res://level/Door/door.tscn" id="4_l8gd6"]
+[ext_resource type="PackedScene" uid="uid://dguxurn4fl8i" path="res://ui/texture_progress_bar.tscn" id="6_41r67"]
+[ext_resource type="AudioStream" uid="uid://dp66oj5qh61yn" path="res://music/Oops.mp3" id="7_rnd6f"]
+
+[node name="level01" type="Node2D" unique_id=2020615678]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=247947270]
+position = Vector2(608, 352.00003)
+scale = Vector2(0.7425926, 0.7148558)
+texture = ExtResource("1_ih8w3")
+
+[node name="coins" type="Node2D" parent="." unique_id=562057316]
+
+[node name="Coin" parent="coins" unique_id=353184248 instance=ExtResource("1_8es24")]
+position = Vector2(208, 160)
+
+[node name="Coin2" parent="coins" unique_id=324863469 instance=ExtResource("1_8es24")]
+position = Vector2(957, 157)
+
+[node name="arbusto25" parent="coins/Coin2" unique_id=644056880 instance=ExtResource("2_gbk3v")]
+position = Vector2(-317, 59.000015)
+rotation = 1.5761939
+scale = Vector2(0.71485656, 0.7425918)
+skew = -0.00039577484
+
+[node name="arbusto24" parent="coins/Coin2" unique_id=1258550272 instance=ExtResource("2_gbk3v")]
+position = Vector2(-373, 107)
+rotation = -3.1385312
+scale = Vector2(1.217971, 0.5416762)
+skew = 0.00024211407
+
+[node name="arbusto29" parent="coins/Coin2" unique_id=1563293929 instance=ExtResource("2_gbk3v")]
+position = Vector2(-429, 51)
+rotation = -1.584952
+scale = Vector2(0.71486104, 0.7425875)
+skew = 0.0010375977
+
+[node name="Coin3" parent="coins" unique_id=487575940 instance=ExtResource("1_8es24")]
+position = Vector2(304, 408)
+
+[node name="arbusto21" parent="coins/Coin3" unique_id=1797140405 instance=ExtResource("2_gbk3v")]
+position = Vector2(-96, -248)
+rotation = 6.2843947
+
+[node name="Coin4" parent="coins" unique_id=1705304526 instance=ExtResource("1_8es24")]
+position = Vector2(584, 216)
+
+[node name="walls" type="Node2D" parent="." unique_id=749908237]
+
+[node name="arbusto" parent="walls" unique_id=684913523 instance=ExtResource("2_gbk3v")]
+position = Vector2(99, 686)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto2" parent="walls" unique_id=613793307 instance=ExtResource("2_gbk3v")]
+position = Vector2(198, 686)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto3" parent="walls" unique_id=1978125611 instance=ExtResource("2_gbk3v")]
+position = Vector2(735, 686)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto4" parent="walls" unique_id=292944114 instance=ExtResource("2_gbk3v")]
+position = Vector2(308, 686)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto5" parent="walls" unique_id=1962402159 instance=ExtResource("2_gbk3v")]
+position = Vector2(837, 686)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto8" parent="walls" unique_id=1355459378 instance=ExtResource("2_gbk3v")]
+position = Vector2(16.000002, -8)
+rotation = 3.141153
+scale = Vector2(1.2799658, 1)
+
+[node name="arbusto7" parent="walls" unique_id=1702089077 instance=ExtResource("2_gbk3v")]
+position = Vector2(664, -5)
+rotation = 3.1368601
+scale = Vector2(1.2799659, 1)
+
+[node name="arbusto" parent="walls/arbusto7" unique_id=1417255889 instance=ExtResource("2_gbk3v")]
+position = Vector2(108.998764, 0.5158434)
+
+[node name="arbusto" parent="walls/arbusto7/arbusto" unique_id=650844701 instance=ExtResource("2_gbk3v")]
+position = Vector2(116.99863, 0.55369663)
+rotation = 0.009878874
+
+[node name="arbusto" parent="walls/arbusto7/arbusto/arbusto" unique_id=1565715649 instance=ExtResource("2_gbk3v")]
+position = Vector2(111.003685, 0.42874622)
+rotation = -0.0049039144
+
+[node name="arbusto" parent="walls/arbusto7/arbusto/arbusto/arbusto" unique_id=352410695 instance=ExtResource("2_gbk3v")]
+position = Vector2(112.000015, -0.027151108)
+
+[node name="arbusto9" parent="walls" unique_id=173603002 instance=ExtResource("2_gbk3v")]
+position = Vector2(770, -6)
+rotation = 3.1384234
+scale = Vector2(1.2799659, 1)
+
+[node name="arbusto10" parent="walls" unique_id=821382657 instance=ExtResource("2_gbk3v")]
+position = Vector2(440, 688)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto11" parent="walls" unique_id=1652764949 instance=ExtResource("2_gbk3v")]
+position = Vector2(630.00006, 686)
+rotation = 0.0021748806
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto" parent="." unique_id=926051610 instance=ExtResource("2_gbk3v")]
+position = Vector2(954, 686)
+scale = Vector2(1.4791968, 0.9984375)
+
+[node name="arbusto" parent="arbusto" unique_id=419532738 groups=["recoleccion"] instance=ExtResource("2_gbk3v")]
+position = Vector2(114, 0)
+
+[node name="arbusto3" parent="." unique_id=1166122490 instance=ExtResource("2_gbk3v")]
+position = Vector2(879, -7)
+rotation = 3.1384234
+scale = Vector2(1.2799659, 1)
+
+[node name="arbusto4" parent="." unique_id=1058870266 instance=ExtResource("2_gbk3v")]
+position = Vector2(981, -8)
+rotation = 3.1124737
+scale = Vector2(1.2799659, 1)
+
+[node name="arbusto4" parent="arbusto4" unique_id=2018939476 instance=ExtResource("2_gbk3v")]
+position = Vector2(-107.01285, -1.116127)
+rotation = 0.015298255
+
+[node name="arbusto8" parent="." unique_id=433987890 instance=ExtResource("2_gbk3v")]
+position = Vector2(-19, 291.00006)
+rotation = 1.564317
+scale = Vector2(1.3228574, 1.1274155)
+
+[node name="arbusto9" parent="." unique_id=431712303 instance=ExtResource("2_gbk3v")]
+position = Vector2(-20, 181)
+rotation = 1.564317
+scale = Vector2(1.3228574, 1.1274155)
+
+[node name="Enemigos" parent="." unique_id=1118322169 instance=ExtResource("3_gbk3v")]
+position = Vector2(640, 400)
+
+[node name="arbusto11" parent="." unique_id=1438693453 instance=ExtResource("2_gbk3v")]
+position = Vector2(-21, 73)
+rotation = 1.564317
+scale = Vector2(1.3228574, 1.1274155)
+
+[node name="arbusto12" parent="." unique_id=1356721345 instance=ExtResource("2_gbk3v")]
+position = Vector2(-15.999985, 626)
+rotation = 1.564317
+scale = Vector2(1.3228574, 1.1274155)
+
+[node name="arbusto13" parent="." unique_id=268977629 instance=ExtResource("2_gbk3v")]
+position = Vector2(-18, 404.99994)
+rotation = 1.564317
+scale = Vector2(1.3228574, 1.1274155)
+
+[node name="arbusto14" parent="." unique_id=1886252700 instance=ExtResource("2_gbk3v")]
+position = Vector2(-17, 511.99994)
+rotation = 1.564317
+scale = Vector2(1.3228574, 1.1274155)
+
+[node name="door" parent="." unique_id=1490600849 instance=ExtResource("4_l8gd6")]
+position = Vector2(1072, 16)
+scale = Vector2(0.3, 0.3)
+
+[node name="arbusto2" parent="." unique_id=893384441 instance=ExtResource("2_gbk3v")]
+position = Vector2(1193, 353.00003)
+rotation = 4.7185507
+scale = Vector2(2.3609605, 1)
+
+[node name="arbusto5" parent="." unique_id=490966749 instance=ExtResource("2_gbk3v")]
+position = Vector2(1193, 235)
+rotation = 4.7185507
+scale = Vector2(2.3609605, 1)
+
+[node name="arbusto6" parent="." unique_id=1587839797 instance=ExtResource("2_gbk3v")]
+position = Vector2(1192, 552)
+rotation = 4.7125874
+scale = Vector2(2.3609605, 1)
+
+[node name="arbusto7" parent="." unique_id=1499795134 instance=ExtResource("2_gbk3v")]
+position = Vector2(1193.0001, 146)
+rotation = 4.7185507
+scale = Vector2(2.36096, 1)
+
+[node name="arbusto21" parent="." unique_id=67431797 instance=ExtResource("2_gbk3v")]
+position = Vector2(208, 544)
+rotation = 6.2843947
+
+[node name="arbusto22" parent="." unique_id=1708737864 instance=ExtResource("2_gbk3v")]
+position = Vector2(712, 536)
+rotation = 6.2843947
+
+[node name="arbusto23" parent="." unique_id=1919827964 instance=ExtResource("2_gbk3v")]
+position = Vector2(559.99994, 144)
+rotation = 6.2843947
+
+[node name="arbusto24" parent="." unique_id=287058475 instance=ExtResource("2_gbk3v")]
+position = Vector2(671.99994, 144)
+rotation = 6.2843947
+
+[node name="arbusto25" parent="." unique_id=753847488 instance=ExtResource("2_gbk3v")]
+position = Vector2(783.99994, 144)
+rotation = 6.2843947
+
+[node name="arbusto26" parent="." unique_id=573120800 instance=ExtResource("2_gbk3v")]
+position = Vector2(392.00003, 360)
+rotation = 6.2843947
+
+[node name="arbusto27" parent="." unique_id=1973039024 instance=ExtResource("2_gbk3v")]
+position = Vector2(831.99994, 360.00003)
+rotation = 6.2843947
+
+[node name="arbusto28" parent="." unique_id=1954527331 instance=ExtResource("2_gbk3v")]
+position = Vector2(1056, 360)
+rotation = 4.707004
+
+[node name="TextureProgressBar" parent="." unique_id=125049019 instance=ExtResource("6_41r67")]
+offset_left = 32.0
+offset_top = 8.0
+offset_right = 448.0
+offset_bottom = 104.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.3, 0.3)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=788480756]
+stream = ExtResource("7_rnd6f")
+volume_db = -21.048
+autoplay = true
