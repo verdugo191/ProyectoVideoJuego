@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bma76fr71pypk"]
+
+[ext_resource type="Texture2D" uid="uid://dlws1os582mnu" path="res://level/hazards/Pixel Art Green Hedge Bush.png" id="1_nujvb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5aq51"]
+size = Vector2(136, 72)
+
+[node name="arbusto" type="StaticBody2D" unique_id=644056880]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=748851647]
+position = Vector2(-1.5000031, -7.499996)
+scale = Vector2(0.09440104, 0.11621094)
+texture = ExtResource("1_nujvb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1571760026]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_5aq51")
