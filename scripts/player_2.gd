@@ -5,23 +5,28 @@ signal health_change(current_health: int, maximum_health: int)
 signal dead
 
 # Constantes
-const SPEED: float = 300.0
+const SPEED: float = 150.0
 const INVULNERABLE_TIME: float = 0.8
 const HEALTH_BAR_SEGMENTS: int = 4
+const ROCK_SCENE: PackedScene = preload("res://level/coins/coin.tscn")
 
 # Variables
-@export var max_health: int = 100
+@export var max_health: int = 4
 @export var test_damage_with_space: bool = false
+@export var camera_zoom: float = 2.0
 
 var health: int
 var is_dead: bool = false
 var is_invulnerable: bool = false
+var facing_direction: Vector2 = Vector2.RIGHT
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var camera: Camera2D = $Camera2D
 
 
-# Inicio
+# Inicializar jugador y cámara
 func _ready() -> void:
+	camera.zoom = Vector2(camera_zoom, camera_zoom)
 	health = max_health
 	health_change.emit(health, max_health)
 	_update_health_bar.call_deferred()
@@ -38,6 +43,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = Vector2.ZERO
 		animated_sprite.stop()
 	else:
+		facing_direction = direction.normalized()
 		velocity = direction * SPEED
 
 		if abs(direction.x) > abs(direction.y):
@@ -53,8 +59,7 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 
-# Vida
-
+# Recibir daño
 func take_damage(amount: int) -> void:
 	if is_dead or is_invulnerable:
 		return
@@ -77,6 +82,7 @@ func take_damage(amount: int) -> void:
 	is_invulnerable = false
 
 
+# Terminar la animación de daño
 func _on_damage_animation_finished() -> void:
 	if is_dead:
 		return
@@ -87,6 +93,7 @@ func _on_damage_animation_finished() -> void:
 	animated_sprite.stop()
 
 
+# Gestionar la derrota del jugador
 func die() -> void:
 	if is_dead:
 		return
@@ -99,12 +106,21 @@ func die() -> void:
 	print("El jugador ha muerto")
 
 
+# Actualizar corazones
 func _update_health_bar() -> void:
 	var cuadros := ceili(float(HEALTH_BAR_SEGMENTS) * health / max_health)
 	get_tree().call_group("vida_ui", "actualizar", cuadros)
 
 
-# Prueba
+# Lanzar roca y probar daño
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if QuestManager.consume_rock():
+			var rock := ROCK_SCENE.instantiate()
+			get_tree().current_scene.add_child(rock)
+			rock.scale = Vector2(0.5, 0.5)
+			rock.launch(self, facing_direction)
+			get_viewport().set_input_as_handled()
+
 	if test_damage_with_space and event.is_action_pressed("ui_accept"):
-		take_damage(25)
+		take_damage(1)

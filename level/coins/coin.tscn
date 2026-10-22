@@ -1,49 +1,58 @@
 [gd_scene format=3 uid="uid://dac26rcnmntk7"]
 
 [ext_resource type="Script" uid="uid://b1alswh5g046" path="res://scripts/coin.gd" id="1_i64fm"]
-[ext_resource type="Texture2D" uid="uid://b6tldct41sd7a" path="res://assets/moneda_giro_grande.png" id="2_ape7u"]
+[ext_resource type="Texture2D" uid="uid://br3extecmng83" path="res://assets/Pixel-Art Rock Impact Sprite Sheet.png" id="2_ape7u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a2rvw"]
 radius = 29.017237
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a2rvw"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(0, 0, 192, 256)
+region = Rect2(0, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6hcrp"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(192, 0, 192, 256)
+region = Rect2(0, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_784hw"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(384, 0, 192, 256)
+region = Rect2(271, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ceelf"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(576, 0, 192, 256)
+region = Rect2(542, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cr8h"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(768, 0, 192, 256)
+region = Rect2(813, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_np03n"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(960, 0, 192, 256)
+region = Rect2(1084, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ey052"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(1152, 0, 192, 256)
+region = Rect2(1355, 0, 271, 724)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fqj6h"]
 atlas = ExtResource("2_ape7u")
-region = Rect2(1344, 0, 192, 256)
+region = Rect2(1626, 0, 271, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f47rt"]
+atlas = ExtResource("2_ape7u")
+region = Rect2(1897, 0, 271, 724)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0eb53"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a2rvw")
+}],
+"loop": 1,
+"name": &"inmobile",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6hcrp")
 }, {
@@ -64,13 +73,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fqj6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f47rt")
 }],
 "loop": 1,
-"name": &"coin",
+"name": &"rock",
 "speed": 5.0
 }]
 
-[node name="Coin" type="Area2D" unique_id=353184248 groups=["recoleccion"]]
+[node name="coin" type="Area2D" unique_id=353184248 groups=["recoleccion"]]
 script = ExtResource("1_i64fm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1640913139]
@@ -85,6 +97,6 @@ shape = SubResource("CircleShape2D_a2rvw")
 position = Vector2(-1, 0)
 scale = Vector2(0.2026367, 0.18750001)
 sprite_frames = SubResource("SpriteFrames_0eb53")
-animation = &"coin"
+animation = &"inmobile"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

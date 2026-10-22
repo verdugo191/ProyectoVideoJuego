@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bma76fr71pypk"]
 
-[ext_resource type="Texture2D" uid="uid://dlws1os582mnu" path="res://assets/Pixel Art Green Hedge Bush.png" id="1_nujvb"]
+[ext_resource type="Texture2D" uid="uid://dlws1os582mnu" path="res://level/hazards/Pixel Art Green Hedge Bush.png" id="1_nujvb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5aq51"]
 size = Vector2(136, 72)

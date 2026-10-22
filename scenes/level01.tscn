@@ -1,235 +1,328 @@
 [gd_scene format=3 uid="uid://bb741n3vvy6co"]
 
 [ext_resource type="PackedScene" uid="uid://dac26rcnmntk7" path="res://level/coins/coin.tscn" id="1_8es24"]
-[ext_resource type="Texture2D" uid="uid://cacrejgpw1smy" path="res://assets/Mapa laberíntico de senderos entre setos.png" id="1_ih8w3"]
-[ext_resource type="PackedScene" uid="uid://bma76fr71pypk" path="res://level/hazards/bush.tscn" id="2_gbk3v"]
-[ext_resource type="PackedScene" uid="uid://c5dmxe5purm4b" path="res://scenes/enemigos.tscn" id="3_gbk3v"]
+[ext_resource type="PackedScene" uid="uid://b3e4j2224j4pt" path="res://player/player2.tscn" id="1_42awr"]
+[ext_resource type="Texture2D" uid="uid://bux7dlr18hrkd" path="res://assets/1ab3cf1a-1f9a-47c8-a65f-25dd2235cdaf.png" id="1_xl5rn"]
+[ext_resource type="PackedScene" uid="uid://c5dmxe5purm4b" path="res://scenes/enemigos.tscn" id="3_42awr"]
 [ext_resource type="PackedScene" uid="uid://e1pystbcib3c" path="res://level/Door/door.tscn" id="4_l8gd6"]
-[ext_resource type="PackedScene" uid="uid://dguxurn4fl8i" path="res://ui/texture_progress_bar.tscn" id="6_41r67"]
 [ext_resource type="AudioStream" uid="uid://dp66oj5qh61yn" path="res://music/Oops.mp3" id="7_rnd6f"]
+[ext_resource type="PackedScene" uid="uid://bksfn2fukfrri" path="res://scenes/arbol.tscn" id="8_uqa8t"]
+[ext_resource type="PackedScene" uid="uid://gqcgyr5k372q" path="res://scenes/arbusto.tscn" id="9_uqa8t"]
+[ext_resource type="PackedScene" uid="uid://c8orrnihf2x5q" path="res://scenes/tronco.tscn" id="10_fgmau"]
+[ext_resource type="PackedScene" uid="uid://ccnie73qyfvd" path="res://scenes/rocas.tscn" id="11_gkrsa"]
+[ext_resource type="PackedScene" uid="uid://b74stkxx6w86k" path="res://scenes/plantas.tscn" id="12_42awr"]
+[ext_resource type="PackedScene" uid="uid://byuwf855om6ub" path="res://scenes/arbustito.tscn" id="13_gkrsa"]
+[ext_resource type="PackedScene" uid="uid://tvgculscagci" path="res://scenes/hongo.tscn" id="14_42awr"]
+[ext_resource type="PackedScene" uid="uid://8i5ejk8rbp5f" path="res://scenes/npc.tscn" id="14_qa2kw"]
+
+[sub_resource type="GDScript" id="GDScript_42awr"]
+script/source = "extends Node2D
+
+enum State { QUIETO, HABLANDO, SALIENDO }
+
+@export var nombre_personaje: String = \"Jack\"
+@export var velocidad: float = 120.0
+@export var direccion_salida: Vector2 = Vector2.LEFT
+@export var limite_mapa: Rect2 = Rect2(0, 0, 1152, 648)
+@export var margen_salida: float = 80.0
+@export var anim_quieto: String = \"calmDown\"
+@export var anim_salida: String = \"goAway\"
+@export var animacion_mira_izquierda: bool = true
+
+var dialogos: Array[String] = [
+	\"Oh, hello, friend. Be careful; there's a dog roaming around here.\",
+	\"Maybe you can scare it away by picking up some of the rocks nearby.\"
+]
+
+var state: State = State.QUIETO
+var jugador_cerca: bool = false
+var cancelado: bool = false
+var canvas: DialogueCanvas = null
+var zona: Area2D = null
+var sprite: AnimatedSprite2D = null
+
+
+# Inicio
+func _ready() -> void:
+	var zonas := find_children(\"*\", \"Area2D\", false, false)
+	var sprites := find_children(\"*\", \"AnimatedSprite2D\", false, false)
+
+	if zonas.is_empty():
+		push_warning(\"Jack necesita un Area2D hijo para detectar al jugador\")
+	else:
+		zona = zonas[0] as Area2D
+		zona.body_entered.connect(_on_body_entered)
+		zona.body_exited.connect(_on_body_exited)
+
+	if not sprites.is_empty():
+		sprite = sprites[0] as AnimatedSprite2D
+
+	direccion_salida = direccion_salida.normalized()
+	_reproducir(anim_quieto)
+
+
+# Cercanía
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group(\"player\"):
+		jugador_cerca = true
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if not body.is_in_group(\"player\"):
+		return
+
+	jugador_cerca = false
+
+	if state == State.HABLANDO and canvas != null:
+		cancelado = true
+		canvas.close_dialogue()
+
+
+# Interacción con E
+func _unhandled_input(event: InputEvent) -> void:
+	if state != State.QUIETO or not jugador_cerca:
+		return
+
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_E:
+		get_viewport().set_input_as_handled()
+		_hablar()
+
+
+# Diálogo
+func _hablar() -> void:
+	canvas = get_tree().get_first_node_in_group(\"dialogo\") as DialogueCanvas
+
+	if canvas == null:
+		push_warning(\"No encuentro el CanvasLayer del diálogo (grupo dialogo)\")
+		return
+
+	state = State.HABLANDO
+	cancelado = false
+	canvas.show_dialogue(nombre_personaje, dialogos)
+	await canvas.finished
+
+	if cancelado:
+		state = State.QUIETO
+		return
+
+	QuestManager.start_quest()
+	_salir()
+
+
+# Salida del mapa
+func _salir() -> void:
+	state = State.SALIENDO
+
+	if zona != null:
+		zona.set_deferred(\"monitoring\", false)
+
+	if sprite != null and direccion_salida.x != 0.0:
+		var va_a_la_derecha := direccion_salida.x > 0.0
+		sprite.flip_h = va_a_la_derecha == animacion_mira_izquierda
+
+	_reproducir(anim_salida)
+
+
+func _physics_process(delta: float) -> void:
+	if state != State.SALIENDO:
+		return
+
+	global_position += direccion_salida * velocidad * delta
+
+	var fuera := limite_mapa.grow(margen_salida)
+
+	if not fuera.has_point(global_position):
+		queue_free()
+
+
+func _reproducir(animacion: String) -> void:
+	if sprite == null or sprite.sprite_frames == null:
+		return
+
+	if sprite.sprite_frames.has_animation(animacion):
+		sprite.play(animacion)
+"
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0eb53"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0eb53"]
+size = Vector2(56.75, 688)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vanes"]
+size = Vector2(1192, 45)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_slf6f"]
+size = Vector2(63, 755)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ithms"]
+size = Vector2(1173, 20)
 
 [node name="level01" type="Node2D" unique_id=2020615678]
+y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=247947270]
-position = Vector2(608, 352.00003)
-scale = Vector2(0.7425926, 0.7148558)
-texture = ExtResource("1_ih8w3")
+z_index = -1
+position = Vector2(577, 326.49997)
+scale = Vector2(0.69377995, 0.69468087)
+texture = ExtResource("1_xl5rn")
+
+[node name="Player2" parent="." unique_id=262649738 instance=ExtResource("1_42awr")]
+position = Vector2(76, 558)
+
+[node name="Enemigos" parent="." unique_id=1118322169 instance=ExtResource("3_42awr")]
+position = Vector2(927, 383)
+
+[node name="npc" parent="." unique_id=645437056 instance=ExtResource("14_qa2kw")]
+position = Vector2(117.00001, 474)
+scale = Vector2(0.3, 0.3)
+script = SubResource("GDScript_42awr")
 
 [node name="coins" type="Node2D" parent="." unique_id=562057316]
 
 [node name="Coin" parent="coins" unique_id=353184248 instance=ExtResource("1_8es24")]
-position = Vector2(208, 160)
+position = Vector2(390, 437)
+scale = Vector2(0.5, 0.5)
 
 [node name="Coin2" parent="coins" unique_id=324863469 instance=ExtResource("1_8es24")]
-position = Vector2(957, 157)
-
-[node name="arbusto25" parent="coins/Coin2" unique_id=644056880 instance=ExtResource("2_gbk3v")]
-position = Vector2(-317, 59.000015)
-rotation = 1.5761939
-scale = Vector2(0.71485656, 0.7425918)
-skew = -0.00039577484
-
-[node name="arbusto24" parent="coins/Coin2" unique_id=1258550272 instance=ExtResource("2_gbk3v")]
-position = Vector2(-373, 107)
-rotation = -3.1385312
-scale = Vector2(1.217971, 0.5416762)
-skew = 0.00024211407
-
-[node name="arbusto29" parent="coins/Coin2" unique_id=1563293929 instance=ExtResource("2_gbk3v")]
-position = Vector2(-429, 51)
-rotation = -1.584952
-scale = Vector2(0.71486104, 0.7425875)
-skew = 0.0010375977
+position = Vector2(556, 147)
+scale = Vector2(0.5, 0.5)
 
 [node name="Coin3" parent="coins" unique_id=487575940 instance=ExtResource("1_8es24")]
-position = Vector2(304, 408)
-
-[node name="arbusto21" parent="coins/Coin3" unique_id=1797140405 instance=ExtResource("2_gbk3v")]
-position = Vector2(-96, -248)
-rotation = 6.2843947
+position = Vector2(1089, 282)
+scale = Vector2(0.5, 0.5)
 
 [node name="Coin4" parent="coins" unique_id=1705304526 instance=ExtResource("1_8es24")]
-position = Vector2(584, 216)
+position = Vector2(696, 606)
+scale = Vector2(0.5, 0.5)
 
 [node name="walls" type="Node2D" parent="." unique_id=749908237]
 
-[node name="arbusto" parent="walls" unique_id=684913523 instance=ExtResource("2_gbk3v")]
-position = Vector2(99, 686)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto2" parent="walls" unique_id=613793307 instance=ExtResource("2_gbk3v")]
-position = Vector2(198, 686)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto3" parent="walls" unique_id=1978125611 instance=ExtResource("2_gbk3v")]
-position = Vector2(735, 686)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto4" parent="walls" unique_id=292944114 instance=ExtResource("2_gbk3v")]
-position = Vector2(308, 686)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto5" parent="walls" unique_id=1962402159 instance=ExtResource("2_gbk3v")]
-position = Vector2(837, 686)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto8" parent="walls" unique_id=1355459378 instance=ExtResource("2_gbk3v")]
-position = Vector2(16.000002, -8)
-rotation = 3.141153
-scale = Vector2(1.2799658, 1)
-
-[node name="arbusto7" parent="walls" unique_id=1702089077 instance=ExtResource("2_gbk3v")]
-position = Vector2(664, -5)
-rotation = 3.1368601
-scale = Vector2(1.2799659, 1)
-
-[node name="arbusto" parent="walls/arbusto7" unique_id=1417255889 instance=ExtResource("2_gbk3v")]
-position = Vector2(108.998764, 0.5158434)
-
-[node name="arbusto" parent="walls/arbusto7/arbusto" unique_id=650844701 instance=ExtResource("2_gbk3v")]
-position = Vector2(116.99863, 0.55369663)
-rotation = 0.009878874
-
-[node name="arbusto" parent="walls/arbusto7/arbusto/arbusto" unique_id=1565715649 instance=ExtResource("2_gbk3v")]
-position = Vector2(111.003685, 0.42874622)
-rotation = -0.0049039144
-
-[node name="arbusto" parent="walls/arbusto7/arbusto/arbusto/arbusto" unique_id=352410695 instance=ExtResource("2_gbk3v")]
-position = Vector2(112.000015, -0.027151108)
-
-[node name="arbusto9" parent="walls" unique_id=173603002 instance=ExtResource("2_gbk3v")]
-position = Vector2(770, -6)
-rotation = 3.1384234
-scale = Vector2(1.2799659, 1)
-
-[node name="arbusto10" parent="walls" unique_id=821382657 instance=ExtResource("2_gbk3v")]
-position = Vector2(440, 688)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto11" parent="walls" unique_id=1652764949 instance=ExtResource("2_gbk3v")]
-position = Vector2(630.00006, 686)
-rotation = 0.0021748806
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto" parent="." unique_id=926051610 instance=ExtResource("2_gbk3v")]
-position = Vector2(954, 686)
-scale = Vector2(1.4791968, 0.9984375)
-
-[node name="arbusto" parent="arbusto" unique_id=419532738 groups=["recoleccion"] instance=ExtResource("2_gbk3v")]
-position = Vector2(114, 0)
-
-[node name="arbusto3" parent="." unique_id=1166122490 instance=ExtResource("2_gbk3v")]
-position = Vector2(879, -7)
-rotation = 3.1384234
-scale = Vector2(1.2799659, 1)
-
-[node name="arbusto4" parent="." unique_id=1058870266 instance=ExtResource("2_gbk3v")]
-position = Vector2(981, -8)
-rotation = 3.1124737
-scale = Vector2(1.2799659, 1)
-
-[node name="arbusto4" parent="arbusto4" unique_id=2018939476 instance=ExtResource("2_gbk3v")]
-position = Vector2(-107.01285, -1.116127)
-rotation = 0.015298255
-
-[node name="arbusto8" parent="." unique_id=433987890 instance=ExtResource("2_gbk3v")]
-position = Vector2(-19, 291.00006)
-rotation = 1.564317
-scale = Vector2(1.3228574, 1.1274155)
-
-[node name="arbusto9" parent="." unique_id=431712303 instance=ExtResource("2_gbk3v")]
-position = Vector2(-20, 181)
-rotation = 1.564317
-scale = Vector2(1.3228574, 1.1274155)
-
-[node name="Enemigos" parent="." unique_id=1118322169 instance=ExtResource("3_gbk3v")]
-position = Vector2(640, 400)
-
-[node name="arbusto11" parent="." unique_id=1438693453 instance=ExtResource("2_gbk3v")]
-position = Vector2(-21, 73)
-rotation = 1.564317
-scale = Vector2(1.3228574, 1.1274155)
-
-[node name="arbusto12" parent="." unique_id=1356721345 instance=ExtResource("2_gbk3v")]
-position = Vector2(-15.999985, 626)
-rotation = 1.564317
-scale = Vector2(1.3228574, 1.1274155)
-
-[node name="arbusto13" parent="." unique_id=268977629 instance=ExtResource("2_gbk3v")]
-position = Vector2(-18, 404.99994)
-rotation = 1.564317
-scale = Vector2(1.3228574, 1.1274155)
-
-[node name="arbusto14" parent="." unique_id=1886252700 instance=ExtResource("2_gbk3v")]
-position = Vector2(-17, 511.99994)
-rotation = 1.564317
-scale = Vector2(1.3228574, 1.1274155)
-
 [node name="door" parent="." unique_id=1490600849 instance=ExtResource("4_l8gd6")]
-position = Vector2(1072, 16)
+position = Vector2(1066, 0)
 scale = Vector2(0.3, 0.3)
-
-[node name="arbusto2" parent="." unique_id=893384441 instance=ExtResource("2_gbk3v")]
-position = Vector2(1193, 353.00003)
-rotation = 4.7185507
-scale = Vector2(2.3609605, 1)
-
-[node name="arbusto5" parent="." unique_id=490966749 instance=ExtResource("2_gbk3v")]
-position = Vector2(1193, 235)
-rotation = 4.7185507
-scale = Vector2(2.3609605, 1)
-
-[node name="arbusto6" parent="." unique_id=1587839797 instance=ExtResource("2_gbk3v")]
-position = Vector2(1192, 552)
-rotation = 4.7125874
-scale = Vector2(2.3609605, 1)
-
-[node name="arbusto7" parent="." unique_id=1499795134 instance=ExtResource("2_gbk3v")]
-position = Vector2(1193.0001, 146)
-rotation = 4.7185507
-scale = Vector2(2.36096, 1)
-
-[node name="arbusto21" parent="." unique_id=67431797 instance=ExtResource("2_gbk3v")]
-position = Vector2(208, 544)
-rotation = 6.2843947
-
-[node name="arbusto22" parent="." unique_id=1708737864 instance=ExtResource("2_gbk3v")]
-position = Vector2(712, 536)
-rotation = 6.2843947
-
-[node name="arbusto23" parent="." unique_id=1919827964 instance=ExtResource("2_gbk3v")]
-position = Vector2(559.99994, 144)
-rotation = 6.2843947
-
-[node name="arbusto24" parent="." unique_id=287058475 instance=ExtResource("2_gbk3v")]
-position = Vector2(671.99994, 144)
-rotation = 6.2843947
-
-[node name="arbusto25" parent="." unique_id=753847488 instance=ExtResource("2_gbk3v")]
-position = Vector2(783.99994, 144)
-rotation = 6.2843947
-
-[node name="arbusto26" parent="." unique_id=573120800 instance=ExtResource("2_gbk3v")]
-position = Vector2(392.00003, 360)
-rotation = 6.2843947
-
-[node name="arbusto27" parent="." unique_id=1973039024 instance=ExtResource("2_gbk3v")]
-position = Vector2(831.99994, 360.00003)
-rotation = 6.2843947
-
-[node name="arbusto28" parent="." unique_id=1954527331 instance=ExtResource("2_gbk3v")]
-position = Vector2(1056, 360)
-rotation = 4.707004
-
-[node name="TextureProgressBar" parent="." unique_id=125049019 instance=ExtResource("6_41r67")]
-offset_left = 32.0
-offset_top = 8.0
-offset_right = 448.0
-offset_bottom = 104.0
-offset_transform_enabled = true
-offset_transform_scale = Vector2(0.3, 0.3)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=788480756]
 stream = ExtResource("7_rnd6f")
 volume_db = -21.048
 autoplay = true
+
+[node name="arbol" parent="." unique_id=376567049 instance=ExtResource("8_uqa8t")]
+position = Vector2(354, 258)
+scale = Vector2(0.14, 0.14)
+
+[node name="arbol3" parent="arbol" unique_id=1264070845 instance=ExtResource("8_uqa8t")]
+position = Vector2(2128.5713, -650.0001)
+
+[node name="arbol2" parent="." unique_id=1609259338 instance=ExtResource("8_uqa8t")]
+position = Vector2(878.00006, 339.99997)
+scale = Vector2(0.14, 0.14)
+
+[node name="arbusto" parent="." unique_id=1465664500 instance=ExtResource("9_uqa8t")]
+position = Vector2(1064, 344)
+scale = Vector2(0.05, 0.05)
+
+[node name="arbusto2" parent="arbusto" unique_id=498827437 instance=ExtResource("9_uqa8t")]
+position = Vector2(-7219.999, -380)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="arbusto3" parent="." unique_id=2074018766 instance=ExtResource("9_uqa8t")]
+position = Vector2(545.00006, 202)
+scale = Vector2(0.049999997, 0.049999997)
+
+[node name="arbusto5" parent="." unique_id=729740595 instance=ExtResource("9_uqa8t")]
+position = Vector2(407.00006, 40.00003)
+scale = Vector2(0.049999997, 0.049999997)
+
+[node name="arbusto6" parent="." unique_id=1627236674 instance=ExtResource("9_uqa8t")]
+position = Vector2(170.00006, 436.99997)
+scale = Vector2(0.049999997, 0.049999997)
+
+[node name="arbusto4" parent="." unique_id=2024769505 instance=ExtResource("9_uqa8t")]
+position = Vector2(132.00006, 163.00002)
+scale = Vector2(0.049999997, 0.049999997)
+
+[node name="arbusto7" parent="." unique_id=1361096878 instance=ExtResource("9_uqa8t")]
+position = Vector2(515.00006, 622)
+scale = Vector2(0.049999997, 0.049999997)
+
+[node name="arbusto2" parent="." unique_id=1973983379 instance=ExtResource("9_uqa8t")]
+position = Vector2(187.99998, 616.99994)
+scale = Vector2(0.05, 0.05)
+
+[node name="arbusto_nuevo" parent="." unique_id=267235470 instance=ExtResource("9_uqa8t")]
+position = Vector2(700, 450)
+scale = Vector2(0.05, 0.05)
+
+[node name="tronco" parent="." unique_id=1722973038 instance=ExtResource("10_fgmau")]
+position = Vector2(973, 496)
+scale = Vector2(0.05, 0.05)
+
+[node name="tronco2" parent="tronco" unique_id=188699328 instance=ExtResource("10_fgmau")]
+position = Vector2(-17899.998, -3959.9995)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="rocas" parent="." unique_id=1383778340 instance=ExtResource("11_gkrsa")]
+position = Vector2(268, 514)
+scale = Vector2(0.05, 0.05)
+
+[node name="rocas4" parent="rocas" unique_id=137811995 instance=ExtResource("11_gkrsa")]
+position = Vector2(13619.998, 2080)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="rocas3" parent="rocas" unique_id=424392937 instance=ExtResource("11_gkrsa")]
+position = Vector2(8300, -320)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="rocas2" parent="rocas" unique_id=1629348542 instance=ExtResource("11_gkrsa")]
+position = Vector2(16239.998, -5919.9995)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="plantas" parent="." unique_id=688409114 instance=ExtResource("12_42awr")]
+position = Vector2(799, 506)
+
+[node name="plantas2" parent="plantas" unique_id=1155581669 instance=ExtResource("12_42awr")]
+position = Vector2(-647, -7)
+
+[node name="arbustito" parent="." unique_id=266385675 instance=ExtResource("13_gkrsa")]
+position = Vector2(772, 182.00002)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="arbustito2" parent="arbustito" unique_id=678044001 instance=ExtResource("13_gkrsa")]
+position = Vector2(-487.99994, -16)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="arbustito3" parent="." unique_id=422338917 instance=ExtResource("13_gkrsa")]
+position = Vector2(325.00003, 402)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="arbustito4" parent="." unique_id=387034423 instance=ExtResource("13_gkrsa")]
+position = Vector2(625, 38.000015)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="hongo" parent="." unique_id=1861710595 instance=ExtResource("14_42awr")]
+position = Vector2(203, 330)
+scale = Vector2(0.1, 0.1)
+
+[node name="hongo2" parent="." unique_id=665009696 instance=ExtResource("14_42awr")]
+position = Vector2(800.99994, 426.99997)
+scale = Vector2(0.099999994, 0.099999994)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=80848170]
+physics_material_override = SubResource("PhysicsMaterial_0eb53")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=668610013]
+position = Vector2(-27.375, 324)
+scale = Vector2(1, 0.99999994)
+shape = SubResource("RectangleShape2D_0eb53")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1525509902]
+position = Vector2(596, -21.5)
+shape = SubResource("RectangleShape2D_vanes")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1563660369]
+position = Vector2(1179, 349)
+shape = SubResource("RectangleShape2D_slf6f")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=895053525]
+position = Vector2(584.5, 656)
+shape = SubResource("RectangleShape2D_ithms")
