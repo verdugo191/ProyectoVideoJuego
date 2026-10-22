@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://mrbph737124n" path="res://scripts/youlost.gd" id="6_tipki"]
 [ext_resource type="PackedScene" uid="uid://dguxurn4fl8i" path="res://ui/texture_progress_bar.tscn" id="7_85g3d"]
 [ext_resource type="PackedScene" uid="uid://c8wr35m63bh2e" path="res://scenes/canvas_layer.tscn" id="9_85g3d"]
-[ext_resource type="Script" path="res://scripts/goal_message.gd" id="11_goal_message"]
+[ext_resource type="Script" uid="uid://v2ve41qa8jmr" path="res://scripts/goal_message.gd" id="11_goal_message"]
 
 [node name="Main" type="Node2D" unique_id=754917483]
 script = ExtResource("1_tefeu")
@@ -36,19 +36,15 @@ offset_bottom = 62.096
 text = "Rocks: 0"
 script = ExtResource("5_tefeu")
 
-[node name="GoalMessage" type="Label" parent="UI" groups=["goal_message"]]
+[node name="GoalMessage" type="Label" parent="UI" unique_id=1765768077 groups=["goal_message"]]
 anchors_preset = 10
-anchor_left = 0.0
 anchor_right = 1.0
-anchor_top = 0.0
-anchor_bottom = 0.0
 offset_top = 20.0
 offset_bottom = 58.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
-text = ""
 script = ExtResource("11_goal_message")
 
 [node name="WinGame" type="Label" parent="UI" unique_id=1554149256]

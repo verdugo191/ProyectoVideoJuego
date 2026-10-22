@@ -3,7 +3,6 @@ extends CharacterBody2D
 @export var interaction_distance: float = 72.0
 @export var exit_door_position: Vector2 = Vector2(570, 590)
 @export var escape_speed: float = 90.0
-@export var flee_duration: float = 3.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -16,6 +15,9 @@ const DIALOGUE_LINES: PackedStringArray = [
 const EXIT_WAYPOINTS: PackedVector2Array = [
 	Vector2(600, 180), Vector2(570, 360), Vector2(570, 500), Vector2(570, 590)
 ]
+const BACK_DOOR_WAYPOINTS: PackedVector2Array = [
+	Vector2(580, 75), Vector2(580, 20), Vector2(580, -80)
+]
 
 enum MovementMode { IDLE, TO_EXIT, FLEEING, ENDING }
 
@@ -25,7 +27,7 @@ var mission_accepted: bool = false
 var dialogue_canvas: DialogueCanvas
 var movement_mode: MovementMode = MovementMode.IDLE
 var exit_waypoint_index: int = 0
-var flee_timer: float = 0.0
+var back_door_waypoint_index: int = 0
 var at_exit: bool = false
 
 
@@ -43,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		MovementMode.TO_EXIT:
 			_move_toward_exit(delta)
 		MovementMode.FLEEING:
-			_flee_from_player(delta)
+			_escape_through_back_door(delta)
 		_:
 			velocity = Vector2.ZERO
 
@@ -111,8 +113,7 @@ func _accept_deal() -> void:
 func _reject_deal() -> void:
 	get_tree().call_group("level_2", "show_level_message", "Mr. Cheese ran away.", 3.0)
 	movement_mode = MovementMode.FLEEING
-	flee_timer = flee_duration
-	_find_player()
+	back_door_waypoint_index = 0
 	animated_sprite.play("rat_goAway")
 
 
@@ -183,22 +184,26 @@ func _get_portrait() -> Texture2D:
 	return animated_sprite.sprite_frames.get_frame_texture("rat_CalmDown", 0)
 
 
-# Huir del jugador
-func _flee_from_player(delta: float) -> void:
-	flee_timer -= delta
-	if flee_timer <= 0.0:
-		velocity = Vector2.ZERO
-		move_and_slide()
-		queue_free()
+# Salir del mapa por la puerta trasera
+func _escape_through_back_door(delta: float) -> void:
+	if back_door_waypoint_index >= BACK_DOOR_WAYPOINTS.size():
+		_finish_back_door_escape()
 		return
-	if player == null or not is_instance_valid(player):
-		_find_player()
-	var direction := Vector2.RIGHT
-	if player != null and is_instance_valid(player):
-		direction = (global_position - player.global_position).normalized()
-		if direction == Vector2.ZERO:
-			direction = Vector2.RIGHT
-	_move_with_collisions(direction, delta)
+	var target := BACK_DOOR_WAYPOINTS[back_door_waypoint_index]
+	if global_position.distance_to(target) <= 10.0:
+		back_door_waypoint_index += 1
+		if back_door_waypoint_index >= BACK_DOOR_WAYPOINTS.size():
+			_finish_back_door_escape()
+			return
+		target = BACK_DOOR_WAYPOINTS[back_door_waypoint_index]
+	_move_with_collisions(global_position.direction_to(target), delta)
+
+
+# Avisar cuando ya salió del mapa
+func _finish_back_door_escape() -> void:
+	velocity = Vector2.ZERO
+	get_tree().call_group("level_2", "on_mr_cheese_escaped")
+	queue_free()
 
 
 # Moverse respetando colisiones

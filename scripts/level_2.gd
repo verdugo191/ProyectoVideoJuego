@@ -6,6 +6,8 @@ const DIALOGUE_SCENE: PackedScene = preload("res://scenes/canvas_layer.tscn")
 @export var spawn_position: Vector2 = Vector2(580, 105)
 @export_range(0.5, 3.0, 0.05) var camera_zoom: float = 2.0
 @export var camera_bounds: Rect2i = Rect2i(0, 0, 1152, 648)
+@export var back_door_position: Vector2 = Vector2(580, 20)
+@export var back_door_radius: float = 48.0
 
 var player: CharacterBody2D
 var background: Sprite2D
@@ -15,6 +17,8 @@ var npc_message_label: Label
 var health_hearts_label: Label
 var message_version: int = 0
 var game_finished: bool = false
+var mr_cheese_escaped: bool = false
+var player_trying_to_leave: bool = false
 
 
 # Preparar el segundo nivel
@@ -60,6 +64,9 @@ func _ready() -> void:
 # Actualizar la oclusión de muebles
 func _process(_delta: float) -> void:
 	_update_furniture_occlusion()
+	if mr_cheese_escaped and is_instance_valid(player):
+		if player.global_position.distance_to(back_door_position) <= back_door_radius:
+			player_trying_to_leave = true
 
 
 # Crear la interfaz del nivel
@@ -139,6 +146,22 @@ func show_level_message(message: String, duration: float = 3.0) -> void:
 
 # Mostrar la pantalla final
 func finish_game() -> void:
+	_show_ending("You won.\nCongratulations, you won.\nGame over.")
+
+
+# Habilitar la salida alternativa cuando Mr. Cheese se marcha
+func on_mr_cheese_escaped() -> void:
+	mr_cheese_escaped = true
+
+
+# Mostrar el final alternativo cuando la niña atrapa al gato
+func on_girl_caught_player() -> void:
+	if mr_cheese_escaped:
+		_show_ending("YOU LOST\nYou have been\ndomesticated.")
+
+
+# Mostrar la pantalla final
+func _show_ending(message: String) -> void:
 	if game_finished:
 		return
 	game_finished = true
@@ -159,12 +182,12 @@ func finish_game() -> void:
 	ending_layer.add_child(shade)
 
 	var ending_text := Label.new()
-	ending_text.text = "GAME OVER"
+	ending_text.text = message
 	ending_text.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	ending_text.offset_left = -240.0
-	ending_text.offset_top = -44.0
+	ending_text.offset_top = -85.0
 	ending_text.offset_right = 240.0
-	ending_text.offset_bottom = 44.0
+	ending_text.offset_bottom = 85.0
 	ending_text.add_theme_font_size_override("font_size", 38)
 	ending_text.add_theme_color_override("font_color", Color(1.0, 0.92, 0.55))
 	ending_text.add_theme_color_override("font_outline_color", Color.BLACK)

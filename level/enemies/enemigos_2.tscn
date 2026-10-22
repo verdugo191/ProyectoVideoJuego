@@ -409,3 +409,7 @@ position = Vector2(-15, 4)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=352253449]
 position = Vector2(66, 48)
 shape = SubResource("CircleShape2D_ithms")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=2105949022]
+path_desired_distance = 8.0
+target_desired_distance = 8.0

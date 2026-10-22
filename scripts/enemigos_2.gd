@@ -142,6 +142,7 @@ func _hide_player() -> void:
 	if player == null or not is_instance_valid(player) or hidden_player:
 		return
 	hidden_player = true
+	get_tree().call_group("level_2", "on_girl_caught_player")
 	player.set("velocity", Vector2.ZERO)
 	player.hide()
 	player.set_physics_process(false)
