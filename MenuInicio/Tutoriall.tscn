@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://by15el220s1o"]
+
+[sub_resource type="StyleBoxFlat" id="TutorialCard"]
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 16.0
+content_margin_bottom = 14.0
+bg_color = Color(0.035, 0.075, 0.14, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.78, 0.96, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 7
+
+[sub_resource type="LabelSettings" id="LabelSettings_rxe5p"]
+
+[node name="Control" type="Control" unique_id=2113628504]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Recoger" type="PanelContainer" parent="." unique_id=63023053]
+custom_minimum_size = Vector2(320, 132)
+layout_mode = 0
+offset_left = 23.0
+offset_top = 45.0
+offset_right = 343.0
+offset_bottom = 177.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TutorialCard")
+
+[node name="Contenido" type="VBoxContainer" parent="Recoger" unique_id=91348782]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Recoger/Contenido" unique_id=2123219613]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.88, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "RECOGER"
+horizontal_alignment = 1
+
+[node name="Texto" type="Label" parent="Recoger/Contenido" unique_id=792622214]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.97, 0.88, 1)
+theme_override_font_sizes/font_size = 16
+text = "Pulsa E para recoger los objetos."
+horizontal_alignment = 1
+
+[node name="Lanzar" type="PanelContainer" parent="." unique_id=460456867]
+custom_minimum_size = Vector2(320, 132)
+layout_mode = 0
+offset_left = 576.0
+offset_top = 55.0
+offset_right = 896.0
+offset_bottom = 187.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TutorialCard")
+
+[node name="Contenido" type="VBoxContainer" parent="Lanzar" unique_id=450817314]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Lanzar/Contenido" unique_id=814338395]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.72, 0.32, 1)
+theme_override_font_sizes/font_size = 20
+text = "LANZAR"
+horizontal_alignment = 1
+
+[node name="Texto" type="Label" parent="Lanzar/Contenido" unique_id=1093768814]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.97, 0.88, 1)
+theme_override_font_sizes/font_size = 16
+text = "Utiliza el clic izquierdo para lanzar."
+horizontal_alignment = 1
+
+[node name="Mover" type="PanelContainer" parent="." unique_id=882717351]
+custom_minimum_size = Vector2(320, 140)
+layout_mode = 0
+offset_left = 22.0
+offset_top = 379.0
+offset_right = 342.0
+offset_bottom = 519.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TutorialCard")
+
+[node name="Contenido" type="VBoxContainer" parent="Mover" unique_id=784407995]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Mover/Contenido" unique_id=1726575424]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.92, 0.62, 1)
+theme_override_font_sizes/font_size = 20
+text = "MOVER"
+horizontal_alignment = 1
+
+[node name="Texto" type="Label" parent="Mover/Contenido" unique_id=1121262676]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.97, 0.88, 1)
+theme_override_font_sizes/font_size = 16
+text = "Usa W, A, S, D o las flechas del teclado para moberte."
+label_settings = SubResource("LabelSettings_rxe5p")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Hablar" type="PanelContainer" parent="." unique_id=1081335001]
+custom_minimum_size = Vector2(320, 132)
+layout_mode = 0
+offset_left = 571.0
+offset_top = 367.0
+offset_right = 891.0
+offset_bottom = 499.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TutorialCard")
+
+[node name="Contenido" type="VBoxContainer" parent="Hablar" unique_id=1142628873]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Hablar/Contenido" unique_id=594108736]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0.68, 1)
+theme_override_font_sizes/font_size = 20
+text = "HABLAR"
+horizontal_alignment = 1
+
+[node name="Texto" type="Label" parent="Hablar/Contenido" unique_id=1142628874]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.97, 0.88, 1)
+theme_override_font_sizes/font_size = 16
+text = "Pulsa E para hablar con el NPC."
+horizontal_alignment = 1

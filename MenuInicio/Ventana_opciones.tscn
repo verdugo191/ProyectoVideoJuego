@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://cekhym0cv31eu"]
+
+[ext_resource type="Texture2D" uid="uid://cpp5kq0ebj2y2" path="res://assets/Inicio/Opciones_ Marco de Madera Fantástico.png" id="1_u5urm"]
+[ext_resource type="Texture2D" uid="uid://cpmygyxypcv88" path="res://assets/Inicio/Glossy Botanical OK Game Button.png" id="2_vecrm"]
+[ext_resource type="Texture2D" uid="uid://b8ojlh6k72qob" path="res://assets/Inicio/Glossy Golden Speaker Icon.png" id="3_e20k0"]
+[ext_resource type="Texture2D" uid="uid://2digx0456gdt" path="res://assets/Inicio/Glossy Golden Expand Screen Icon.png" id="4_5v43d"]
+[ext_resource type="Script" uid="uid://5anx3r5wl8ci" path="res://MenuInicio/ventana_opciones.gd" id="5_script"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdp4x"]
+modulate_color = Color(0.22745098, 0.60784316, 0.27058825, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8uewc"]
+modulate_color = Color(0.9647059, 0.7254902, 0.20392157, 1)
+
+[node name="Window" type="Window" unique_id=371227729]
+oversampling_override = 1.0
+position = Vector2i(0, 36)
+size = Vector2i(375, 250)
+script = ExtResource("5_script")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1463134210]
+offset_left = -18.0
+offset_top = 1.0
+offset_right = 1518.0
+offset_bottom = 1025.0
+scale = Vector2(0.25909528, 0.24895197)
+texture = ExtResource("1_u5urm")
+
+[node name="Control" type="Control" parent="." unique_id=821769870]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control" unique_id=1640473853]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 84.0
+offset_right = 156.0
+offset_bottom = 107.0
+text = "Volumen"
+
+[node name="HSlider" type="HSlider" parent="Control" unique_id=408076362]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.2
+offset_left = 83.0
+offset_top = 107.0
+offset_right = 317.0
+offset_bottom = 123.0
+theme_override_styles/slider = SubResource("StyleBoxTexture_mdp4x")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_8uewc")
+
+[node name="CheckButton" type="CheckButton" parent="Control" unique_id=104175236]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 154.0
+offset_right = 281.0
+offset_bottom = 178.0
+
+[node name="Label2" type="Label" parent="Control" unique_id=1769678826]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 151.0
+offset_right = 227.0
+offset_bottom = 174.0
+text = "Pantalla completa"
+
+[node name="TextureButton" type="TextureButton" parent="Control" unique_id=1622696234]
+layout_mode = 0
+offset_left = 316.0
+offset_top = 47.0
+offset_right = 356.0
+offset_bottom = 87.0
+
+[node name="TextureButton2" type="TextureButton" parent="Control" unique_id=1812210721]
+layout_mode = 0
+offset_left = 113.0
+offset_top = 183.0
+offset_right = 1887.0
+offset_bottom = 1070.0
+scale = Vector2(0.07112998, 0.08575184)
+texture_normal = ExtResource("2_vecrm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=38976302]
+position = Vector2(53.499996, 111.5)
+scale = Vector2(0.03320313, 0.040039055)
+texture = ExtResource("3_e20k0")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=2048772976]
+position = Vector2(55.18747, 164)
+scale = Vector2(0.035450704, 0.03191492)
+texture = ExtResource("4_5v43d")

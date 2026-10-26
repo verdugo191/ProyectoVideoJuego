@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://b14gqavx102ev"]
+
+[ext_resource type="Texture2D" uid="uid://dri6lyb6ifokx" path="res://assets/youWin/Cheerful You Win Cat Banner.png" id="1_yqwhk"]
+[ext_resource type="PackedScene" uid="uid://b7j0uawpqjsw0" path="res://scenes/progress_Stars.tscn" id="2_a1pkt"]
+[ext_resource type="Texture2D" uid="uid://lra422panf5a" path="res://assets/youWin/next_level.png" id="3_sw3r2"]
+[ext_resource type="Texture2D" uid="uid://bqjfo1u8oa718" path="res://assets/youWin/main_menu.png" id="4_42hqa"]
+[ext_resource type="Texture2D" uid="uid://bfq7588dfgs7p" path="res://assets/youWin/restart.png" id="5_ytdud"]
+
+[ext_resource type="Script" uid="uid://ci8asb0awn3rx" path="res://scripts/you_win.gd" id="6_you_win"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1525380759]
+script = ExtResource("6_you_win")
+layer = 30
+process_mode = 3
+
+[node name="Control" type="Control" parent="." unique_id=647400787]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1733949348]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0, 0.0, 0.0, 0.45)
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Control" unique_id=956487814]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Control/CenterContainer" unique_id=1855385313]
+layout_mode = 2
+ratio = 1.5
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Control/CenterContainer/AspectRatioContainer" unique_id=1053318470]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/CenterContainer/AspectRatioContainer/Control" unique_id=1260460482]
+layout_mode = 0
+offset_left = -260.0
+offset_top = -213.0
+offset_right = 1302.0
+offset_bottom = 794.0
+scale = Vector2(0.33429018, 0.3978125)
+texture = ExtResource("1_yqwhk")
+
+[node name="ProgressBar" parent="Control/CenterContainer/AspectRatioContainer/Control" unique_id=641361705 instance=ExtResource("2_a1pkt")]
+layout_mode = 0
+offset_left = -104.0
+offset_top = -233.00002
+offset_right = 487.0
+offset_bottom = -76.000015
+scale = Vector2(0.35686898, 0.5679924)
+
+[node name="Control" type="Control" parent="Control/CenterContainer/AspectRatioContainer/Control" unique_id=762904218]
+layout_mode = 1
+anchors_preset = 0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="Control/CenterContainer/AspectRatioContainer/Control/Control" unique_id=2140587674]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 43.99999
+offset_right = 1651.0
+offset_bottom = 509.0
+scale = Vector2(0.091673605, 0.18853045)
+texture_normal = ExtResource("3_sw3r2")
+
+[node name="TextureButton2" type="TextureButton" parent="Control/CenterContainer/AspectRatioContainer/Control/Control" unique_id=1500922729]
+layout_mode = 0
+offset_left = -51.0
+offset_top = 45.0
+offset_right = 781.0
+offset_bottom = 513.0
+scale = Vector2(0.113847785, 0.19784129)
+texture_normal = ExtResource("4_42hqa")
+
+[node name="TextureButton3" type="TextureButton" parent="Control/CenterContainer/AspectRatioContainer/Control/Control" unique_id=1327275327]
+layout_mode = 0
+offset_left = -163.99997
+offset_top = 45.0
+offset_right = 666.0
+offset_bottom = 526.0
+scale = Vector2(0.11835193, 0.19358145)
+texture_normal = ExtResource("5_ytdud")

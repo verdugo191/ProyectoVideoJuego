@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bvg0qa7lou05h"]
+
+[ext_resource type="Texture2D" uid="uid://0svk1v28cjtj" path="res://assets/Inicio/Imagen de ChatGPT 25 oct 2026, 04_10_33.png" id="1_jn4bt"]
+[ext_resource type="Script" uid="uid://bl3rs081j5i5c" path="res://scripts/pause_menu.gd" id="1_r1fnm"]
+[ext_resource type="Texture2D" uid="uid://cqbarab7jmxxu" path="res://assets/Inicio/continue_button.png" id="2_r1fnm"]
+[ext_resource type="Texture2D" uid="uid://bqc4so3c14bxf" path="res://assets/Inicio/save_button.png" id="3_wen6a"]
+[ext_resource type="Texture2D" uid="uid://bawfydxkufhhw" path="res://assets/Inicio/load_button.png" id="4_cml1b"]
+[ext_resource type="Texture2D" uid="uid://gwjrk3ijdynt" path="res://assets/Inicio/menu_button.png" id="5_1xtef"]
+
+[node name="Pause" type="CanvasLayer" unique_id=1460212629]
+process_mode = 3
+layer = 20
+script = ExtResource("1_r1fnm")
+
+[node name="Interfaz" type="Control" parent="." unique_id=139035955]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Oscurecer" type="ColorRect" parent="Interfaz" unique_id=1604828020]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Centro" type="CenterContainer" parent="Interfaz" unique_id=372625654]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Proporcion" type="AspectRatioContainer" parent="Interfaz/Centro" unique_id=157479204]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 1.5
+
+[node name="Diseño" type="Control" parent="Interfaz/Centro/Proporcion" unique_id=1773326717]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Cartel" type="TextureRect" parent="Interfaz/Centro/Proporcion/Diseño" unique_id=1463863893]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -312.0
+offset_top = -211.0
+offset_right = -212.0
+offset_bottom = -111.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(5.9602475, 4.5051246)
+mouse_filter = 2
+texture = ExtResource("1_jn4bt")
+expand_mode = 1
+
+[node name="Botones" type="VBoxContainer" parent="Interfaz/Centro/Proporcion/Diseño" unique_id=512986782]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.285
+anchor_top = 0.395
+anchor_right = 0.715
+anchor_bottom = 0.895
+offset_left = -152.0
+offset_top = -22.0
+offset_right = -52.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.7107282, 1.9725604)
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Continuar" type="TextureButton" parent="Interfaz/Centro/Proporcion/Diseño/Botones" unique_id=1188187265]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("2_r1fnm")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Guardar" type="TextureButton" parent="Interfaz/Centro/Proporcion/Diseño/Botones" unique_id=1895080930]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("3_wen6a")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Cargar" type="TextureButton" parent="Interfaz/Centro/Proporcion/Diseño/Botones" unique_id=1511118347]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("4_cml1b")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Menu" type="TextureButton" parent="Interfaz/Centro/Proporcion/Diseño/Botones" unique_id=484035269]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("5_1xtef")
+ignore_texture_size = true
+stretch_mode = 5

@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://ce0f5va22uqbr"]
+
+[ext_resource type="Texture2D" uid="uid://beo38pv2ew4k2" path="res://assets/Inicio/Partidas Guardadas Forest UI Panel.png" id="1_fncqf"]
+[ext_resource type="Script" uid="uid://cct0dk77sgr1t" path="res://scripts/ventana_carga.gd" id="2_script"]
+
+[node name="Window" type="Window" unique_id=699000064]
+oversampling_override = 1.0
+title = "Partidas guardadas"
+position = Vector2i(0, 36)
+size = Vector2i(900, 600)
+script = ExtResource("2_script")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=323215481]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_fncqf")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="." unique_id=763769151]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ItemList" type="ItemList" parent="Control" unique_id=1624187558]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 235.0
+offset_right = 810.0
+offset_bottom = 490.0
+allow_reselect = true
+
+[node name="TextureButton" type="TextureButton" parent="Control" unique_id=633288073]
+layout_mode = 0
+offset_left = 801.0
+offset_top = 130.0
+offset_right = 841.0
+offset_bottom = 170.0
+mouse_default_cursor_shape = 2
+
+[node name="LoadButton" type="Button" parent="Control" unique_id=1830312016]
+layout_mode = 0
+offset_left = 486.0
+offset_top = 510.0
+offset_right = 608.0
+offset_bottom = 562.0
+mouse_default_cursor_shape = 2
+text = "Cargar"
+
+[node name="DeleteButton" type="Button" parent="Control" unique_id=867417374]
+layout_mode = 0
+offset_left = 613.0
+offset_top = 511.0
+offset_right = 735.0
+offset_bottom = 563.0
+mouse_default_cursor_shape = 2
+text = "Borrar"

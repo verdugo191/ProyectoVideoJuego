@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://be66wek6q5sda"]
+
+[ext_resource type="Texture2D" uid="uid://dwch7dl77nec0" path="res://assets/Pixel Cheese Hover Animation.png" id="1_u4200"]
+[ext_resource type="Script" uid="uid://6ufufnyy4mje" path="res://scripts/cheese.gd" id="2_cheese_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxt3f"]
+atlas = ExtResource("1_u4200")
+region = Rect2(0, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwr6l"]
+atlas = ExtResource("1_u4200")
+region = Rect2(221, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm2ho"]
+atlas = ExtResource("1_u4200")
+region = Rect2(442, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htu40"]
+atlas = ExtResource("1_u4200")
+region = Rect2(663, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h8rh"]
+atlas = ExtResource("1_u4200")
+region = Rect2(884, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ec3n1"]
+atlas = ExtResource("1_u4200")
+region = Rect2(1105, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uexrd"]
+atlas = ExtResource("1_u4200")
+region = Rect2(1326, 0, 221, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1ae8"]
+atlas = ExtResource("1_u4200")
+region = Rect2(1547, 0, 221, 887)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_slf6f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxt3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bwr6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm2ho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htu40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h8rh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ec3n1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uexrd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1ae8")
+}],
+"loop": 1,
+"name": &"cheese",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vanes"]
+radius = 111.16204
+
+[node name="cheese" type="Area2D" unique_id=1578625003]
+script = ExtResource("2_cheese_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1262578754]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1368250219]
+sprite_frames = SubResource("SpriteFrames_slf6f")
+animation = &"cheese"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=383404364]
+position = Vector2(-2, 39)
+shape = SubResource("CircleShape2D_vanes")

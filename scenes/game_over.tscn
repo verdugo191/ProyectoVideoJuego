@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://c8v66ild6amld"]
+
+[ext_resource type="Texture2D" uid="uid://beaufauurvdms" path="res://assets/Inicio/You Lost Cat Signboard.png" id="1_tbwuq"]
+[ext_resource type="Texture2D" uid="uid://31nuvtrxh7fg" path="res://assets/Inicio/Glossy Wooden Restart Button.png" id="2_racf3"]
+[ext_resource type="Texture2D" uid="uid://c7oexmkjc8s53" path="res://assets/Inicio/Cartoon Wooden Main Menu Button.png" id="3_7m3ot"]
+[ext_resource type="Script" uid="uid://unh8jt6vsc6e" path="res://scripts/game_over.gd" id="4_game_over"]
+
+[node name="GameOver" type="CanvasLayer" unique_id=1573032482]
+process_mode = 3
+layer = 100
+script = ExtResource("4_game_over")
+
+[node name="Interfaz" type="Control" parent="." unique_id=338160722]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Oscurecer" type="ColorRect" parent="Interfaz" unique_id=684229929]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Centro" type="CenterContainer" parent="Interfaz" unique_id=193910225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Propocion" type="AspectRatioContainer" parent="Interfaz/Centro" unique_id=1584666332]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 1.5
+
+[node name="Contenido" type="Control" parent="Interfaz/Centro/Propocion" unique_id=669236640]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+offset_transform_enabled = true
+
+[node name="Cartel" type="TextureRect" parent="Interfaz/Centro/Propocion/Contenido" unique_id=1605548774]
+layout_mode = 0
+offset_left = -281.0
+offset_top = -206.0
+offset_right = 1255.0
+offset_bottom = 818.0
+scale = Vector2(0.35277843, 0.40384173)
+texture = ExtResource("1_tbwuq")
+
+[node name="Reiniciar" type="TextureButton" parent="Interfaz/Centro/Propocion/Contenido" unique_id=202000710]
+layout_mode = 0
+offset_left = -134.0
+offset_top = 32.000004
+offset_right = 2036.0
+offset_bottom = 757.0
+scale = Vector2(0.116095364, 0.078432776)
+texture_normal = ExtResource("2_racf3")
+
+[node name="Menu" type="TextureButton" parent="Interfaz/Centro/Propocion/Contenido" unique_id=1923712919]
+layout_mode = 0
+offset_left = -114.0
+offset_top = 85.000015
+offset_right = 2058.0
+offset_bottom = 809.0
+scale = Vector2(0.098096, 0.08852775)
+texture_normal = ExtResource("3_7m3ot")

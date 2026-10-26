@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b3e4j2224j4pt"]
 
 [ext_resource type="Script" uid="uid://d0uro133xl4uy" path="res://scripts/player_2.gd" id="1_c08b3"]
-[ext_resource type="Texture2D" uid="uid://c6a1jxk03x2yr" path="res://assets/gato_spritesheet_128.png" id="2_m4sf7"]
+[ext_resource type="Texture2D" uid="uid://c6a1jxk03x2yr" path="res://assets/PLAYER/gato_spritesheet_128.png" id="2_m4sf7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2xmo7"]
 atlas = ExtResource("2_m4sf7")

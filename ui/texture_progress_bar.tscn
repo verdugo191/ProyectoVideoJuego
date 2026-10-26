@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dguxurn4fl8i"]
 
-[ext_resource type="Texture2D" uid="uid://d16q367vjyf86" path="res://assets/barra_vida_vacia.png" id="1_clyxh"]
-[ext_resource type="Texture2D" uid="uid://bvt5a7jko7sb6" path="res://assets/barra_vida_llena.png" id="2_82ka4"]
+[ext_resource type="Texture2D" uid="uid://d16q367vjyf86" path="res://assets/PLAYER/barra_vida_vacia.png" id="1_clyxh"]
+[ext_resource type="Texture2D" uid="uid://bvt5a7jko7sb6" path="res://assets/PLAYER/barra_vida_llena.png" id="2_82ka4"]
 [ext_resource type="Script" uid="uid://8s8dvbjsvw52" path="res://scripts/life.gd" id="3_4h7ao"]
 
 [node name="TextureProgressBar" type="TextureProgressBar" unique_id=125049019]

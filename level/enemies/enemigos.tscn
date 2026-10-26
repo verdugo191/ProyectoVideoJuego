@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://t1kddpnpkiuk"]
 
 [ext_resource type="Script" uid="uid://cofbuq541i83g" path="res://scripts/enemigos.gd" id="1_khrlw"]
-[ext_resource type="Texture2D" uid="uid://nkq305tj34n0" path="res://assets/perro_128_spritesheet.png" id="2_rb51c"]
+[ext_resource type="Texture2D" path="res://assets/perro_128_spritesheet (1).png" id="2_rb51c"]
 [ext_resource type="Texture2D" uid="uid://b47r0toq0436f" path="res://assets/perro_128_spritesheet (1).png" id="3_wmu63"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_khrfe"]
@@ -439,7 +439,7 @@ radius = 24.0
 height = 48.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0eb53"]
-radius = 70.0
+radius = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ithms"]
 radius = 131.13733
@@ -488,5 +488,3 @@ position = Vector2(45, 47)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=242914953]
 position = Vector2(-9, -2)
 shape = SubResource("CircleShape2D_ithms")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1680209806]

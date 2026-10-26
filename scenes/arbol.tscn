@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bksfn2fukfrri"]
+
+[ext_resource type="Texture2D" uid="uid://dmcx6nd1peiu7" path="res://assets/terrain/Lush Pixel Art Tree Sprite.png" id="1_omjyp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_slf6f"]
+radius = 66.0
+height = 274.0
+
+[node name="arbol" type="StaticBody2D" unique_id=376567049]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=699546784]
+position = Vector2(0.9999995, 0)
+scale = Vector2(0.91747576, 0.87254906)
+texture = ExtResource("1_omjyp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=273559219 groups=["notocar", "recoleccion"]]
+position = Vector2(11, 301)
+shape = SubResource("CapsuleShape2D_slf6f")

@@ -11,18 +11,22 @@ config_version=5
 [application]
 
 config/name="prototipo de video juego"
-run/main_scene="uid://djlqj8o4355ch"
+run/main_scene="uid://bdo6fuwdscwto"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 QuestManager="*uid://bt5i85lt565dk"
+SaveManager="*res://scripts/save_manager.gd"
+PauseMenu="*res://scenes/pause.tscn"
+GameOver="*res://scenes/game_over.tscn"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/per_pixel_transparency/allowed=true
 
 [global_group]
 
