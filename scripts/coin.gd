@@ -36,7 +36,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_E or event.physical_keycode == KEY_E:
 			if player_nearby and is_available and not is_thrown:
-				if QuestManager.quest_state == QuestManager.QuestState.NOT_STARTED:
+				if not _is_tutorial_level() and QuestManager.quest_state == QuestManager.QuestState.NOT_STARTED:
 					print("Primero habla con el NPC para desbloquear las piedras.")
 					return
 				_pick_up_rock()
@@ -87,7 +87,7 @@ func _pick_up_rock() -> void:
 	if not is_instance_valid(player):
 		return
 
-	if QuestManager.quest_state == QuestManager.QuestState.NOT_STARTED:
+	if not _is_tutorial_level() and QuestManager.quest_state == QuestManager.QuestState.NOT_STARTED:
 		return
 
 	QuestManager.collect_coin()
@@ -139,3 +139,8 @@ func launch(from_player: Node2D, direction: Vector2) -> void:
 func _finish_throw() -> void:
 	print("La roca ha terminado su lanzamiento.")
 	queue_free()
+
+# Permitir recoger objetos antes de hablar solo en el tutorial.
+func _is_tutorial_level() -> bool:
+	var scene := get_tree().current_scene
+	return scene != null and scene.is_in_group("tutorial_level")

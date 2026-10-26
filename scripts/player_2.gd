@@ -5,7 +5,7 @@ signal health_change(current_health: int, maximum_health: int)
 signal dead
 
 # Constantes
-const SPEED: float = 150.0
+@export var movement_speed: float = 150.0
 const INVULNERABLE_TIME: float = 0.8
 const HEALTH_BAR_SEGMENTS: int = 4
 const ROCK_SCENE: PackedScene = preload("res://level/coins/coin.tscn")
@@ -44,7 +44,7 @@ func _physics_process(_delta: float) -> void:
 		animated_sprite.stop()
 	else:
 		facing_direction = direction.normalized()
-		velocity = direction * SPEED
+		velocity = direction * movement_speed
 
 		if abs(direction.x) > abs(direction.y):
 			animated_sprite.play("walk")
@@ -103,6 +103,11 @@ func die() -> void:
 	animated_sprite.stop()
 
 	dead.emit()
+	var game_over: Node = get_node_or_null("/root/GameOver")
+	if game_over != null:
+		game_over.call_deferred("show_game_over")
+	else:
+		push_warning("No se encontró el autoload GameOver.")
 	print("El jugador ha muerto")
 
 

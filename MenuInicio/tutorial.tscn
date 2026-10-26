@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://du1ulvy3tocjy"]
+
+[ext_resource type="Texture2D" uid="uid://dktvakw6ggaqe" path="res://assets/terrain/Pixel Meadow Tilemap with Flowers and Stones.png" id="1_yeo74"]
+[ext_resource type="PackedScene" uid="uid://b3e4j2224j4pt" path="res://player/player2.tscn" id="2_mni58"]
+[ext_resource type="PackedScene" uid="uid://e1pystbcib3c" path="res://level/Door/door.tscn" id="3_udnnl"]
+[ext_resource type="PackedScene" uid="uid://by15el220s1o" path="res://MenuInicio/Tutoriall.tscn" id="4_0vsg8"]
+[ext_resource type="PackedScene" uid="uid://be66wek6q5sda" path="res://level/coins/cheese.tscn" id="5_44nit"]
+[ext_resource type="PackedScene" uid="uid://dac26rcnmntk7" path="res://level/coins/coin.tscn" id="6_3dck1"]
+[ext_resource type="PackedScene" uid="uid://dwbk74u2afpha" path="res://MenuInicio/Npc_Tutuorial.tscn" id="7_ajrxs"]
+[ext_resource type="PackedScene" uid="uid://c8wr35m63bh2e" path="res://scenes/canvas_layer.tscn" id="8_dialogue"]
+
+[node name="tutorial" type="Node2D" unique_id=312298964 groups=["tutorial_level"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1290683182 groups=["player", "recoleccion", "tutorial_level"]]
+position = Vector2(578, 320.00003)
+scale = Vector2(0.69497615, 0.70377254)
+texture = ExtResource("1_yeo74")
+
+[node name="cheese" parent="." unique_id=1578625003 groups=["player", "recoleccion", "tutorial_level"] instance=ExtResource("5_44nit")]
+position = Vector2(69, 210)
+scale = Vector2(0.2, 0.2)
+
+[node name="coin2" parent="." unique_id=2141308467 instance=ExtResource("6_3dck1")]
+position = Vector2(186, 215)
+
+[node name="coin" parent="." unique_id=353184248 instance=ExtResource("6_3dck1")]
+position = Vector2(711, 228)
+
+[node name="Player2" parent="." unique_id=262649738 instance=ExtResource("2_mni58")]
+position = Vector2(58, 535)
+scale = Vector2(3, 3)
+movement_speed = 200.0
+camera_zoom = 1.0
+
+[node name="door" parent="." unique_id=1490600849 instance=ExtResource("3_udnnl")]
+position = Vector2(1045, -24.999992)
+scale = Vector2(0.4, 0.4)
+destination_scene = "res://scenes/main.tscn"
+
+[node name="Control" parent="." unique_id=2113628504 instance=ExtResource("4_0vsg8")]
+offset_left = -9.0
+offset_top = -33.0
+offset_right = -9.0
+offset_bottom = -33.0
+
+[node name="Node2D" parent="." unique_id=1487339034 groups=["player", "recoleccion", "tutorial_level"] instance=ExtResource("7_ajrxs")]
+position = Vector2(732, 535)
+
+[node name="DialogueCanvas" parent="." unique_id=218245676 instance=ExtResource("8_dialogue")]

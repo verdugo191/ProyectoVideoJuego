@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ccnie73qyfvd"]
+
+[ext_resource type="Texture2D" uid="uid://cpldawpfwe1gc" path="res://level/hazards/Pixel Art Mossy Rock Cluster.png" id="1_086no"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ql73s"]
+size = Vector2(692, 429)
+
+[node name="rocas" type="StaticBody2D" unique_id=1383778340]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=286803235]
+texture = ExtResource("1_086no")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1611703038]
+position = Vector2(-14, 109.5)
+shape = SubResource("RectangleShape2D_ql73s")

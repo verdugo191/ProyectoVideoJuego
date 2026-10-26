@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b7j0uawpqjsw0"]
+
+[ext_resource type="Texture2D" uid="uid://p6modfukncu2" path="res://assets/youWin/estrellas_vacias_recortada.png" id="1_13wxg"]
+[ext_resource type="Texture2D" uid="uid://df5to3xda748a" path="res://assets/youWin/estrellas_llenas_recortada.png" id="2_sj7bm"]
+[ext_resource type="Script" uid="uid://c4l7gjch4xoaq" path="res://scripts/progress_stars.gd" id="3_8ac55"]
+
+[node name="ProgressBar" type="TextureProgressBar" unique_id=641361705]
+offset_right = 535.0
+offset_bottom = 155.0
+offset_transform_enabled = true
+max_value = 4.0
+value = 4.0
+texture_under = ExtResource("1_13wxg")
+texture_progress = ExtResource("2_sj7bm")
+script = ExtResource("3_8ac55")
